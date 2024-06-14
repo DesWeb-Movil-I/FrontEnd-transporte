@@ -1,8 +1,16 @@
 import React from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  Platform,
+  TouchableOpacity,
+} from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "./AppNavigator";
+import { LinearGradient } from "expo-linear-gradient";
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -21,18 +29,23 @@ const HomeScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <LinearGradient colors={["#ffffff", "#141679"]} style={styles.container}>
       <Text style={styles.text}>
-        Bienvenido a la Aplicación de Transporte Urbano
+        Marcar vueltas Transporte Urbano
       </Text>
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Registrar Vuelta"
-          onPress={handleNavigateToRegistroVuelta}
-        />
-        <Button title="Informes" onPress={handleNavigateToInformes} />
-      </View>
-    </View>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleNavigateToRegistroVuelta}
+      >
+        <Text style={styles.buttonText}>Registrar Vuelta</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttonDos}
+        onPress={handleNavigateToInformes}
+      >
+        <Text style={styles.buttonText}>Ver Informes</Text>
+      </TouchableOpacity>
+    </LinearGradient>
   );
 };
 
@@ -44,12 +57,45 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   text: {
-    fontSize: 20,
+    fontSize: 30,
+    fontWeight: "700",
     marginBottom: 20,
     textAlign: "center",
+    color: "#fff",
   },
   buttonContainer: {
-    marginTop: 20,
+    width: "100%",
+    marginTop: Platform.OS === "web" ? 20 : 10,
+    height: Platform.OS === "web" ? 50 : 50,
+    marginBottom: 0,
+  },
+  buttonContainerDos: {
+    width: "100%",
+    marginTop: Platform.OS === "web" ? 20 : 0,
+    height: Platform.OS === "web" ? 50 : 50,
+  },
+  button: {
+    width: "100%",
+    backgroundColor: "#007AFF", // Color de fondo del botón 007874
+    paddingVertical: 12,
+    borderRadius: 50,
+    marginTop: 7,
+    marginBottom: 10,
+    alignItems: "center",
+  },
+  buttonDos: {
+    width: "100%",
+    backgroundColor: "#007874", // Color de fondo del botón 007874
+    paddingVertical: 12,
+    borderRadius: 50,
+    marginTop: 7,
+    marginBottom: 10,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#FFFFFF", // Color del texto del botón
+    fontSize: 18,
+    fontWeight: "700",
   },
 });
 

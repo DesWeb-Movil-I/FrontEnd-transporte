@@ -33,11 +33,13 @@ const LoginScreen = () => {
        const resultData = result.data;
 
        if (resultData.length > 0) {
-         setEstado(""); // Limpiar estado en caso de éxito
+         setEstado("");
+         setEmail(""); 
+         setPassword(""); 
          navigation.navigate("Loading");
        } 
      } catch (err) {
-       console.error("Error al iniciar sesión:", err);
+       //console.error("Error al iniciar sesión:", err);
        setEstado("Usuario o Contraseña incorrectos!");
      }
    };
