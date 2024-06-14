@@ -28,11 +28,13 @@ const HomeScreen = () => {
     navigation.navigate("Informes");
   };
 
+  const handleNavigateToLogin = () => {
+    navigation.navigate("Login");
+  }
+
   return (
     <LinearGradient colors={["#ffffff", "#141679"]} style={styles.container}>
-      <Text style={styles.text}>
-        Marcar vueltas Transporte Urbano
-      </Text>
+      <Text style={styles.text}>Marcar vueltas Transporte Urbano</Text>
       <TouchableOpacity
         style={styles.button}
         onPress={handleNavigateToRegistroVuelta}
@@ -44,6 +46,12 @@ const HomeScreen = () => {
         onPress={handleNavigateToInformes}
       >
         <Text style={styles.buttonText}>Ver Informes</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.buttonDos, { backgroundColor: "#FF6347" }]}
+        onPress={handleNavigateToLogin}
+      >
+        <Text style={styles.buttonText}>Cerrar sesion</Text>
       </TouchableOpacity>
     </LinearGradient>
   );
