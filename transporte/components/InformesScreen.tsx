@@ -7,6 +7,7 @@ import {
   StyleSheet,
   FlatList,
   Platform,
+  ActivityIndicator,
 } from "react-native";
 import axios from "axios";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -24,7 +25,7 @@ const InformesScreen = () => {
   const baseURL = "http://192.168.1.41:5640/api/informe/";
 
   useEffect(() => {
-    fetchRegistros(); // Al cargar el componente, obtén todos los registros
+    fetchRegistros(); 
   }, []);
 
   const fetchRegistros = async () => {
@@ -32,7 +33,7 @@ const InformesScreen = () => {
       setLoading(true);
       const response = await axios.get(baseURL);
       setRegistros(response.data);
-      setFilteredRegistros(response.data); // Mostrar todos los registros al inicio
+      setFilteredRegistros(response.data); 
       setLoading(false);
     } catch (error) {
       console.error("Error fetching registros:", error);
@@ -75,7 +76,7 @@ const InformesScreen = () => {
   };
 
   const handleConfirmDate = (date) => {
-    const formattedDate = date.toISOString().split("T")[0]; // Formato YYYY-MM-DD
+    const formattedDate = date.toISOString().split("T")[0]; 
     setFecha(formattedDate);
     hideDatePicker();
   };
@@ -109,6 +110,7 @@ const InformesScreen = () => {
         placeholder="YYYY-MM-AA"
         value={fecha}
         onChangeText={handleConfirmDate}
+        editable={false}
       />
 
       <View
@@ -145,7 +147,7 @@ const InformesScreen = () => {
       </View>
 
       {loading ? (
-        <Text style={styles.loadingText}>Cargando...</Text>
+        <ActivityIndicator size="large" color="#007AFF" />
       ) : (
         <FlatList
           data={filteredRegistros}
@@ -161,8 +163,6 @@ const InformesScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-
     padding: Platform.OS === "web" ? 50 : 20,
   },
   label: {
