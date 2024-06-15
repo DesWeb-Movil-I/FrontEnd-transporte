@@ -45,7 +45,7 @@ const HomeScreen = () => {
         <Text style={styles.buttonText}>Ver Informes</Text>
       </TouchableOpacity>
       <TouchableOpacity
-       style={[styles.buttonDos, { backgroundColor: "FF6347"}]}
+       style={[styles.buttonDos, { backgroundColor: "#FF5371"}]}
        onPress={handleNavigateToPerfil}>
         <Text style={styles.buttonText}>Ver Perfil</Text>
         </TouchableOpacity>

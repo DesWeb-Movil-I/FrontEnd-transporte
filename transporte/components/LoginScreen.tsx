@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { View, TextInput, Button, StyleSheet, Image, Text, Platform, } from "react-native";
+import { View, TextInput, Button, StyleSheet, Image, Text, Platform } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "./AppNavigator";
@@ -16,25 +16,23 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const [estado, setEstado] = useState("");
 
-   const handleLogin = async () => {
-     const url = `http://192.168.1.41:5640/api/informacion/auth/${email}/${password}`;
+  const handleLogin = async () => {
+    const url = `http://192.168.1.41:5640/api/informacion/auth/${email}/${password}`;
 
-     try {
-       const result = await axios.get(url);
-       const resultData = result.data;
+    try {
+      const result = await axios.get(url);
+      const resultData = result.data;
 
-       if (resultData.length > 0) {
-         setEstado("");
-         setEmail(""); 
-         setPassword(""); 
-         navigation.navigate("Loading");
-       } 
-     } catch (err) {
-       //console.error("Error al iniciar sesión:", err);
-       setEstado("Usuario o Contraseña incorrectos!");
-
-     }
-   };
+      if (resultData.length > 0) {
+        setEstado("");
+        setEmail("");
+        setPassword("");
+        navigation.navigate("Loading");
+      }
+    } catch (err) {
+      setEstado("Usuario o Contraseña incorrectos!");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -56,9 +54,6 @@ const LoginScreen = () => {
         />
         <View style={styles.buttonContainer}>
           <Button title="Entrar" onPress={handleLogin} />
-        </View>
-        <View style={styles.buttonContainerDos}>
-          <Button title="Registrar" onPress={handleLogin} />
         </View>
         {estado ? <Text style={styles.estado}>{estado}</Text> : null}
       </View>
