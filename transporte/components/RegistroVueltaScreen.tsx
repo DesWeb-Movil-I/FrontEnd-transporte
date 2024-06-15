@@ -13,6 +13,9 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./AppNavigator";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { LinearGradient } from "expo-linear-gradient";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import axios from "axios";
 
 type RegistroVueltaScreenNavigationProp = NativeStackNavigationProp<
@@ -30,28 +33,34 @@ const RegistroVueltaScreen = () => {
 
   const navigation = useNavigation<RegistroVueltaScreenNavigationProp>();
 
-    const handleRegistro = async () => {
-     const data = { fecha, hora, ruta, num_pasajeros };
+  const handleRegistro = async () => {
+    const data = { fecha, hora, ruta, num_pasajeros };
 
-      try {
-        const response = await axios.post(
-          "http://192.168.1.41:5640/api/registro",
-          data
-        );
-        console.log("Registro exitoso:", response.data);
+    try {
+      const response = await axios.post(
+        "http://192.168.1.41:5640/api/registro",
+        data
+      );
+      console.log("Registro exitoso:", response.data);
 
-        if (Platform.OS === "android") {
+      if (Platform.OS === "android") {
         ToastAndroid.showWithGravity(
-          "Vuelta registrada con exito",
+          "Vuelta registrada con éxito",
           ToastAndroid.SHORT,
           ToastAndroid.BOTTOM
         );
       }
-
-      } catch (error) {
-        console.log("Error al registrar:", error);
-      }
-    };
+    } catch (error) {
+      console.log("Error al registrar:", error);
+       if (Platform.OS === "android") {
+         ToastAndroid.showWithGravity(
+           "Error al registrar",
+           ToastAndroid.SHORT,
+           ToastAndroid.BOTTOM
+         );
+       }
+    }
+  };
 
   const showDatePicker = () => {
     setDatePickerVisible(true);
@@ -70,7 +79,15 @@ const RegistroVueltaScreen = () => {
   };
 
   const handleConfirmDate = (date: Date) => {
-    setFecha(date.toLocaleDateString());
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; 
+    const day = date.getDate();
+
+    const formattedDate = `${year}-${month < 10 ? "0" + month : month}-${
+      day < 10 ? "0" + day : day
+    }`;
+
+    setFecha(formattedDate);
     hideDatePicker();
   };
 
@@ -82,47 +99,77 @@ const RegistroVueltaScreen = () => {
   };
 
   return (
-    <LinearGradient colors={["#ffffff", "#141679"]} style={styles.container}>
-      <Text style={styles.label}>Fecha:</Text>
-      <TextInput
-        style={[styles.input, styles.disabledInput]}
-        placeholder="DD/MM/AA"
-        value={fecha}
-        editable={false}
-      />
-      <TouchableOpacity style={styles.buttonInputs} onPress={showDatePicker}>
-        <Text style={styles.buttonTextImputs}>Establecer Fecha</Text>
-      </TouchableOpacity>
-      <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        mode="date"
-        onConfirm={handleConfirmDate}
-        onCancel={hideDatePicker}
-      />
-      <Text style={styles.label}>Hora:</Text>
-      <TextInput
-        style={[styles.input, styles.disabledInput]}
-        placeholder="00:00"
-        value={hora}
-        editable={false}
-      />
-      <TouchableOpacity style={styles.buttonInputs} onPress={showTimePicker}>
-        <Text style={styles.buttonTextImputs}>Establecer Hora</Text>
-      </TouchableOpacity>
-      <DateTimePickerModal
-        isVisible={isTimePickerVisible}
-        mode="time"
-        onConfirm={handleConfirmTime}
-        onCancel={hideTimePicker}
-      />
-      <Text style={styles.labelNight}>Ruta:</Text>
+    <LinearGradient colors={["#efefef", "#efefef"]} style={styles.container}>
+      <View
+        style={{
+          width: "100%",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <View style={styles.caja}>
+          <Text style={styles.label}>
+            <Ionicons name="calendar-number" size={15} color="black" /> Fecha
+          </Text>
+          <TextInput
+            style={[styles.input, styles.disabledInput]}
+            placeholder="YYYY-MM-DD"
+            value={fecha}
+            editable={false}
+          />
+
+          <TouchableOpacity
+            style={styles.buttonInputs}
+            onPress={showDatePicker}
+          >
+            <Text style={styles.buttonTextInputs}>Establecer </Text>
+          </TouchableOpacity>
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={handleConfirmDate}
+            onCancel={hideDatePicker}
+          />
+        </View>
+
+        <View style={styles.caja}>
+          <Text style={styles.label}>
+            <Ionicons name="timer" size={15} color="black" />
+            Hora
+          </Text>
+          <TextInput
+            style={[styles.input, styles.disabledInput]}
+            placeholder="00:00"
+            value={hora}
+            editable={false}
+          />
+          <TouchableOpacity
+            style={styles.buttonInputs}
+            onPress={showTimePicker}
+          >
+            <Text style={styles.buttonTextInputs}>Establecer</Text>
+          </TouchableOpacity>
+          <DateTimePickerModal
+            isVisible={isTimePickerVisible}
+            mode="time"
+            onConfirm={handleConfirmTime}
+            onCancel={hideTimePicker}
+          />
+        </View>
+      </View>
+
+      <Text style={[styles.label, { marginTop: 20 }]}>
+        <FontAwesome5 name="route" size={15} color="black" /> Ingresar Ruta
+      </Text>
       <TextInput
         style={styles.input}
         placeholder="Las Flores..."
         value={ruta}
         onChangeText={setRuta}
       />
-      <Text style={styles.labelNight}>Pasajeros:</Text>
+      <Text style={styles.label}> 
+        <MaterialIcons name="group" size={15} color="black" /> Cantidad Pasajeros
+      </Text>
       <TextInput
         style={styles.input}
         placeholder="0"
@@ -146,40 +193,35 @@ const RegistroVueltaScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "flex-start",
     padding: Platform.OS === "web" ? 50 : 20,
+    marginTop: 50,
   },
   label: {
     fontSize: 18,
     fontWeight: "500",
     marginBottom: 5,
-    color: "#4a4a4a",
-  },
-  labelNight: {
-    fontSize: 18,
-    fontWeight: "500",
-    marginBottom: 5,
-    color: "#FFFFFF",
+    color: "#000",
   },
   input: {
     width: "100%",
     height: Platform.OS === "web" ? 40 : 50,
     borderRadius: 10,
-    borderColor: "#c9c9c9",
+    borderColor: "#FFF",
     borderWidth: 1,
     marginBottom: 20,
     paddingHorizontal: 10,
-    backgroundColor: "#D9D9D9",
-    fontSize: Platform.OS === "web" ? 16 : 16,
+    backgroundColor: "#FFF",
+    fontSize: 16,
   },
   disabledInput: {
-    backgroundColor: "#E0E0E0",
-    color: "#000000", // Cambia el color del texto para que sea visible
+    backgroundColor: "#efefef",
+    color: "#000000",
+    borderBottomColor: "gray",
   },
   button: {
     width: "100%",
-    backgroundColor: "#007AFF", // Color de fondo del botón
+    backgroundColor: "#007AFF",
     paddingVertical: 12,
     borderRadius: 50,
     marginTop: 7,
@@ -187,20 +229,40 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonInputs: {
-    width: "50%",
-    backgroundColor: "#007AFF", // Color de fondo del botón
+    width: "100%",
+    backgroundColor: "#007AFF",
     paddingVertical: 12,
-    borderRadius: 50,
+    borderRadius: 10,
     marginBottom: 10,
     alignItems: "center",
   },
   buttonText: {
-    color: "#FFFFFF", // Color del texto del botón
+    color: "#FFFFFF",
     fontSize: 18,
   },
-  buttonTextImputs: {
-    color: "#FFFFFF", // Color del texto del botón
+  buttonTextInputs: {
+    color: "#FFFFFF",
     fontSize: 14,
+    fontWeight: "500",
+  },
+  navigationBar: {
+    width: "100%",
+    height: Platform.OS === "web" ? 60 : 80, // Ajustar altura según la plataforma
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#007AFF", // Color de fondo de la barra de navegación
+    marginBottom: 20,
+  },
+  logoText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#FFFFFF", // Color del texto del logo
+  },
+  caja: {
+    width: 180,
+    backgroundColor: "#FFF",
+    borderRadius: 10,
+    padding: 10,
   },
 });
 
