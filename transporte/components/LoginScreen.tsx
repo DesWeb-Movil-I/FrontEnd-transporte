@@ -55,6 +55,11 @@ const LoginScreen = () => {
         <View style={styles.buttonContainer}>
           <Button title="Entrar" onPress={handleLogin} />
         </View>
+
+        <View style={styles.buttonContainerDos}>
+          <Button title="Registrar" onPress={() => navigation.navigate("Registrar")} />
+        </View>
+
         {estado ? <Text style={styles.estado}>{estado}</Text> : null}
       </View>
     </View>

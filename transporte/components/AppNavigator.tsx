@@ -7,7 +7,7 @@ import HomeScreen from "./HomeScreen";
 import RegistroVueltaScreen from "./RegistroVueltaScreen";
 import InformesScreen from "./InformesScreen";
 import PerfilScreen from './PerfilScreen';
-
+import RegistrarScreen from "./RegistrarScreen";
 
 export type RootStackParamList = {
   Login: undefined;
@@ -16,6 +16,7 @@ export type RootStackParamList = {
   RegistroVuelta: undefined;
   Informes: undefined;
   Perfil: undefined;
+  Registrar: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -29,6 +30,13 @@ const AppNavigator = () => {
           component={LoginScreen}
           options={{ headerShown: false }}
         />
+        
+        <Stack.Screen
+        name="Registrar"
+        component={RegistrarScreen}
+        options={{headerShown: false}}
+       />
+
         <Stack.Screen
           name="Loading"
           component={LoadingScreen}
