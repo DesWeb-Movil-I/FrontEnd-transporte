@@ -1,18 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
-import {
-  View,
-  TextInput,
-  Button,
-  StyleSheet,
-  Image,
-  Text,
-  Platform,
-} from "react-native";
+import { View, TextInput, Button, StyleSheet, Image, Text, Platform, } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "./AppNavigator";
-import AsyncStorage from "@react-native-async-storage/async-storage"; // Importar AsyncStorage
 
 type LoginScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -41,6 +32,7 @@ const LoginScreen = () => {
      } catch (err) {
        //console.error("Error al iniciar sesión:", err);
        setEstado("Usuario o Contraseña incorrectos!");
+
      }
    };
 

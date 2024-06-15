@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  Platform,
-  TouchableOpacity,
-} from "react-native";
+import { Text, StyleSheet, Platform, TouchableOpacity, } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "./AppNavigator";
@@ -32,6 +25,10 @@ const HomeScreen = () => {
     navigation.navigate("Login");
   }
 
+  const handleNavigateToPerfil = () => {
+    navigation.navigate("Perfil");
+  }
+
   return (
     <LinearGradient colors={["#ffffff", "#141679"]} style={styles.container}>
       <Text style={styles.text}>Marcar vueltas Transporte Urbano</Text>
@@ -48,9 +45,14 @@ const HomeScreen = () => {
         <Text style={styles.buttonText}>Ver Informes</Text>
       </TouchableOpacity>
       <TouchableOpacity
+       style={[styles.buttonDos, { backgroundColor: "FF6347"}]}
+       onPress={handleNavigateToPerfil}>
+        <Text style={styles.buttonText}>Ver Perfil</Text>
+        </TouchableOpacity>
+
+      <TouchableOpacity
         style={[styles.buttonDos, { backgroundColor: "#FF6347" }]}
-        onPress={handleNavigateToLogin}
-      >
+        onPress={handleNavigateToLogin}>
         <Text style={styles.buttonText}>Cerrar sesion</Text>
       </TouchableOpacity>
     </LinearGradient>
