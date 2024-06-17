@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ToastAndroid, Platform, } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ToastAndroid,
+  Platform,
+  Alert,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./AppNavigator";
@@ -8,6 +17,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { useAuth } from "./AuthContex";
 import axios from "axios";
 
 type RegistroVueltaScreenNavigationProp = NativeStackNavigationProp<
@@ -16,9 +26,11 @@ type RegistroVueltaScreenNavigationProp = NativeStackNavigationProp<
 >;
 
 const RegistroVueltaScreen = () => {
+  const {userId} = useAuth();
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
   const [ruta, setRuta] = useState("");
+  const chofer_id = userId;
   const [num_pasajeros, setPasajeros] = useState("");
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
   const [isTimePickerVisible, setTimePickerVisible] = useState(false);
@@ -26,11 +38,20 @@ const RegistroVueltaScreen = () => {
   const navigation = useNavigation<RegistroVueltaScreenNavigationProp>();
 
   const handleRegistro = async () => {
-    const data = { fecha, hora, ruta, num_pasajeros };
 
+       if (!fecha || !hora || !ruta || !num_pasajeros) {
+         Alert.alert(
+           "Campos Incompletos",
+           "Por favor complete todos los campos."
+         );
+         return;
+       }
+
+
+    const data = { fecha, hora, ruta, num_pasajeros, chofer_id };
     try {
       const response = await axios.post(
-        "http://192.168.1.41:5640/api/registro",
+        "https://back-end-app-xyzp.onrender.com/api/registro",
         data
       );
       console.log("Registro exitoso:", response.data);

@@ -5,15 +5,19 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { useAuth } from "./AuthContex";
 
 const InformesScreen = () => {
   const [fecha, setFecha] = useState("");
+  const {userId} = useAuth();
   const [registros, setRegistros] = useState([]);
   const [filteredRegistros, setFilteredRegistros] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
 
-  const baseURL = "http://192.168.1.41:5640/api/informe/";
+  const baseURL = `https://back-end-app-xyzp.onrender.com/api/informe/user/${userId}`;
+  const baseURL2 = "https://back-end-app-xyzp.onrender.com/api/informe/";
 
   useEffect(() => {
     fetchRegistros(); 
@@ -38,7 +42,7 @@ const InformesScreen = () => {
       let filteredData = [];
 
       if (fecha) {
-        const response = await axios.get(`${baseURL}${fecha}`);
+        const response = await axios.get(`${baseURL2}${fecha}/${userId}`);
         filteredData = response.data;
       } else {
         const response = await axios.get(baseURL);
@@ -74,6 +78,14 @@ const InformesScreen = () => {
 
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
+      <Text style={styles.label}>
+        <MaterialCommunityIcons
+          name="face-man-profile"
+          size={15}
+          color="black"
+        />
+        {`  ${item.chofer}`}
+      </Text>
       <Text style={styles.label}>
         <Ionicons name="calendar-number" size={15} color="red" />
         {`  ${item.fecha}`}

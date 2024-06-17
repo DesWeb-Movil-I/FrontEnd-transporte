@@ -4,6 +4,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "./AppNavigator";
 import { LinearGradient } from "expo-linear-gradient";
+import { useAuth } from "./AuthContex";
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -11,6 +12,7 @@ type HomeScreenNavigationProp = NativeStackNavigationProp<
 >;
 
 const HomeScreen = () => {
+  const {logout, userId} = useAuth();
   const navigation = useNavigation<HomeScreenNavigationProp>();
 
   const handleNavigateToRegistroVuelta = () => {
@@ -22,7 +24,10 @@ const HomeScreen = () => {
   };
 
   const handleNavigateToLogin = () => {
+    logout();
     navigation.navigate("Login");
+    console.log(userId);
+    logout();
   }
 
   const handleNavigateToPerfil = () => {

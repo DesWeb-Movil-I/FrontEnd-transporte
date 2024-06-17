@@ -1,6 +1,17 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { View, TextInput, Button, StyleSheet, Text, Platform, ToastAndroid, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  Text,
+  Platform,
+  ToastAndroid,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -18,15 +29,23 @@ const RegistrarScreen = () => {
   const [nombre, setNombre] = useState("");
   const [identidad, setIdentidad] = useState("");
   const [telefono, setTelefono] = useState("");
-  const [activo, setActivo] = useState("");
   const [unidad, setUnidad] = useState("");
   const [contrasena, setContrasena] = useState("");
 
   const handleRegistro = async () => {
-    const data = { nombre, identidad, telefono, activo, unidad, contrasena };
+    // Validar campos vacíos
+    if (!nombre || !identidad || !telefono || !unidad || !contrasena) {
+      Alert.alert("Campos Incompletos", "Por favor completa todos los campos.");
+      return;
+    }
+
+    const data = { nombre, identidad, telefono, unidad, contrasena };
 
     try {
-      const response = await axios.post("http://192.168.1.41:5640/api/registro", data);
+      const response = await axios.post(
+        "https://back-end-app-xyzp.onrender.com/api/informacion/",
+        data
+      );
       console.log("Registro exitoso:", response.data);
 
       if (Platform.OS === "android") {
@@ -73,12 +92,6 @@ const RegistrarScreen = () => {
       />
       <TextInput
         style={styles.input}
-        placeholder="Activo"
-        value={activo}
-        onChangeText={setActivo}
-      />
-      <TextInput
-        style={styles.input}
         placeholder="Unidad"
         value={unidad}
         onChangeText={setUnidad}
@@ -96,7 +109,10 @@ const RegistrarScreen = () => {
             <FontAwesome5 name="user-plus" size={15} color="white" /> Registrar
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.goBack()}
+        >
           <Text style={styles.buttonText}>
             <Ionicons name="arrow-back" size={15} color="white" /> Volver
           </Text>

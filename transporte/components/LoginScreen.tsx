@@ -4,6 +4,7 @@ import { View, TextInput, Button, StyleSheet, Image, Text, Platform } from "reac
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "./AppNavigator";
+import { useAuth } from "./AuthContex";
 
 type LoginScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -12,18 +13,22 @@ type LoginScreenNavigationProp = NativeStackNavigationProp<
 
 const LoginScreen = () => {
   const navigation = useNavigation<LoginScreenNavigationProp>();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [estado, setEstado] = useState("");
 
   const handleLogin = async () => {
-    const url = `http://192.168.1.41:5640/api/informacion/auth/${email}/${password}`;
+    const url = `https://back-end-app-xyzp.onrender.com/api/informacion/auth/${email}/${password}`;
 
     try {
       const result = await axios.get(url);
       const resultData = result.data;
 
       if (resultData.length > 0) {
+        const userId = resultData[0].id; 
+        console.log(userId)
+        login(userId);
         setEstado("");
         setEmail("");
         setPassword("");
