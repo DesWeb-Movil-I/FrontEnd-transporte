@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "./AppNavigator";
 import { LinearGradient } from "expo-linear-gradient";
 import { useAuth } from "./AuthContex";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -35,7 +36,8 @@ const HomeScreen = () => {
   }
 
   return (
-    <LinearGradient colors={["#ffffff", "#141679"]} style={styles.container}>
+    <LinearGradient colors={["#ffffff", "#ffffff"]} style={styles.container}>
+      <FontAwesome name="bus" size={50} color="black" />
       <Text style={styles.text}>Marcar vueltas Transporte Urbano</Text>
       <TouchableOpacity
         style={styles.button}
@@ -47,17 +49,19 @@ const HomeScreen = () => {
         style={styles.buttonDos}
         onPress={handleNavigateToInformes}
       >
-        <Text style={styles.buttonText}>Ver Informes</Text>
+        <Text style={styles.buttonText}>Informes</Text>
       </TouchableOpacity>
       <TouchableOpacity
-       style={[styles.buttonDos, { backgroundColor: "#FF5371"}]}
-       onPress={handleNavigateToPerfil}>
-        <Text style={styles.buttonText}>Ver Perfil</Text>
-        </TouchableOpacity>
+        style={[styles.buttonDos, { backgroundColor: "#007AFF" }]}
+        onPress={handleNavigateToPerfil}
+      >
+        <Text style={styles.buttonText}>Perfil</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity
         style={[styles.buttonDos, { backgroundColor: "#FF6347" }]}
-        onPress={handleNavigateToLogin}>
+        onPress={handleNavigateToLogin}
+      >
         <Text style={styles.buttonText}>Cerrar sesion</Text>
       </TouchableOpacity>
     </LinearGradient>
@@ -76,7 +80,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     marginBottom: 20,
     textAlign: "center",
-    color: "#fff",
+    color: "#000000",
   },
   buttonContainer: {
     width: "100%",
@@ -91,24 +95,24 @@ const styles = StyleSheet.create({
   },
   button: {
     width: "100%",
-    backgroundColor: "#007AFF", // Color de fondo del botón 007874
+    backgroundColor: "#007AFF",
     paddingVertical: 12,
-    borderRadius: 50,
+    borderRadius: 10,
     marginTop: 7,
     marginBottom: 10,
     alignItems: "center",
   },
   buttonDos: {
     width: "100%",
-    backgroundColor: "#007874", // Color de fondo del botón 007874
+    backgroundColor: "#007AFF", 
     paddingVertical: 12,
-    borderRadius: 50,
+    borderRadius: 10,
     marginTop: 7,
     marginBottom: 10,
     alignItems: "center",
   },
   buttonText: {
-    color: "#FFFFFF", // Color del texto del botón
+    color: "#FFFFFF",
     fontSize: 18,
     fontWeight: "700",
   },

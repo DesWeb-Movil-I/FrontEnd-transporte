@@ -10,6 +10,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useAuth } from "./AuthContex";
 import axios from "axios";
 
+
 type PerfilScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Perfil'>;
 
 interface Props {
@@ -83,13 +84,20 @@ const PerfilScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <LinearGradient colors={["#efefef", "#efefef"]} style={styles.container}>
       <AntDesign name="user" size={100} color="black" style={styles.logo} />
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContainer}
+      >
         <View style={styles.profileItem}>
           <Text style={styles.label}>
             <Ionicons name="person" size={18} color="black" /> Nombre:
           </Text>
           {isEditing ? (
-            <TextInput style={styles.input} value={name} onChangeText={setName} />
+            <TextInput
+              style={styles.input}
+              value={name}
+              onChangeText={setName}
+            />
           ) : (
             <Text style={styles.value}>{name}</Text>
           )}
@@ -141,7 +149,8 @@ const PerfilScreen: React.FC<Props> = ({ navigation }) => {
 
         <View style={styles.profileItem}>
           <Text style={styles.label}>
-            <MaterialIcons name="password" size={18} color="black" /> Contraseña:
+            <MaterialIcons name="password" size={18} color="black" />{" "}
+            Contraseña:
           </Text>
           {isEditing ? (
             <TextInput
@@ -151,7 +160,7 @@ const PerfilScreen: React.FC<Props> = ({ navigation }) => {
               onChangeText={setContrasena}
             />
           ) : (
-            <Text style={styles.value}>********</Text> // Puedes usar cualquier texto genérico aquí
+            <Text style={styles.value}>********</Text>
           )}
         </View>
       </ScrollView>
@@ -165,7 +174,10 @@ const PerfilScreen: React.FC<Props> = ({ navigation }) => {
           style={[styles.button, { backgroundColor: "#FF6347" }]}
           onPress={handleBackToHome}
         >
-          <Text style={styles.buttonText}>Volver a Inicio</Text>
+          <Text style={styles.buttonText}> 
+            <AntDesign name="arrowleft" size={24} color="white" />
+             Atras
+          </Text>
         </TouchableOpacity>
       </View>
     </LinearGradient>
@@ -175,67 +187,68 @@ const PerfilScreen: React.FC<Props> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'flex-start',
-    padding: Platform.OS === 'web' ? 50 : 20,
+    alignItems: "flex-start",
+    padding: Platform.OS === "web" ? 50 : 20,
     marginTop: 50,
   },
   logoText: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontWeight: "bold",
+    color: "#FFFFFF",
   },
   logo: {
-    alignSelf: 'center',
+    alignSelf: "center",
     marginBottom: 20,
   },
   scrollView: {
     flex: 1,
-    width: '100%',
+    width: "100%",
   },
   scrollContainer: {
-    alignItems: 'center',
-    paddingBottom: 50, 
+    alignItems: "center",
+    paddingBottom: 50,
   },
   profileItem: {
-    width: '100%',
+    width: "100%",
     marginBottom: 10,
-    alignItems: 'flex-start',
+    alignItems: "flex-start",
   },
   label: {
     fontSize: 18,
-    fontWeight: '500',
+    fontWeight: "500",
     marginBottom: 5,
-    color: '#000',
+    color: "#000",
   },
   value: {
     fontSize: 18,
   },
   input: {
-    width: '100%',
-    height: Platform.OS === 'web' ? 40 : 50,
+    width: "100%",
+    height: Platform.OS === "web" ? 40 : 50,
     borderRadius: 10,
-    borderColor: '#FFF',
+    borderColor: "#FFF",
     borderWidth: 1,
     marginBottom: 20,
     paddingHorizontal: 10,
-    backgroundColor: '#FFF',
+    backgroundColor: "#FFF",
     fontSize: 16,
   },
   buttonContainer: {
-    width: '100%',
+    width: "100%",
     marginTop: 20,
   },
   button: {
-    width: '100%',
-    backgroundColor: '#007AFF',
+    width: "100%",
+    backgroundColor: "#007AFF",
     paddingVertical: 12,
     borderRadius: 50,
     marginTop: 7,
     marginBottom: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
   buttonText: {
-    color: '#FFFFFF',
+    fontWeight: "500",
+    color: "#FFFFFF",
     fontSize: 18,
   },
 });

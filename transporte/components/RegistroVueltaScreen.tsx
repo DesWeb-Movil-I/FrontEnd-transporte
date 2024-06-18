@@ -19,6 +19,7 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useAuth } from "./AuthContex";
 import axios from "axios";
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 type RegistroVueltaScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -113,6 +114,16 @@ const RegistroVueltaScreen = () => {
 
   return (
     <LinearGradient colors={["#efefef", "#efefef"]} style={styles.container}>
+      <Text
+        style={{
+          fontSize: 18,
+          fontWeight: "500",
+          color: "#444444",
+          marginBottom: 10,
+        }}
+      >
+        Registrar Vuleta
+      </Text>
       <View
         style={{
           width: "100%",
@@ -180,8 +191,9 @@ const RegistroVueltaScreen = () => {
         value={ruta}
         onChangeText={setRuta}
       />
-      <Text style={styles.label}> 
-        <MaterialIcons name="group" size={15} color="black" /> Cantidad Pasajeros
+      <Text style={styles.label}>
+        <MaterialIcons name="group" size={15} color="black" /> Cantidad
+        Pasajeros
       </Text>
       <TextInput
         style={styles.input}
@@ -190,14 +202,16 @@ const RegistroVueltaScreen = () => {
         value={num_pasajeros}
         onChangeText={setPasajeros}
       />
+      
       <TouchableOpacity style={styles.button} onPress={handleRegistro}>
-        <Text style={styles.buttonText}>Registrar Vuelta</Text>
+        <Text style={styles.buttonText}>Registrar</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.button, { backgroundColor: "#FF6347" }]}
         onPress={() => navigation.navigate("Home")}
       >
-        <Text style={styles.buttonText}>Volver</Text>
+        <Text style={styles.buttonText}> 
+          <AntDesign name="arrowleft" size={24} color="white"/> Atras</Text>
       </TouchableOpacity>
     </LinearGradient>
   );
@@ -206,7 +220,7 @@ const RegistroVueltaScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "flex-start",
+    alignItems: 'flex-start',
     padding: Platform.OS === "web" ? 50 : 20,
     marginTop: 50,
   },
@@ -236,7 +250,7 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#007AFF",
     paddingVertical: 12,
-    borderRadius: 50,
+    borderRadius: 10,
     marginTop: 7,
     marginBottom: 10,
     alignItems: "center",
@@ -250,6 +264,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
+    fontWeight: '500',
     color: "#FFFFFF",
     fontSize: 18,
   },
@@ -260,16 +275,16 @@ const styles = StyleSheet.create({
   },
   navigationBar: {
     width: "100%",
-    height: Platform.OS === "web" ? 60 : 80, // Ajustar altura según la plataforma
+    height: Platform.OS === "web" ? 60 : 80,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#007AFF", // Color de fondo de la barra de navegación
+    backgroundColor: "#007AFF",
     marginBottom: 20,
   },
   logoText: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#FFFFFF", // Color del texto del logo
+    color: "#FFFFFF", 
   },
   caja: {
     width: 180,

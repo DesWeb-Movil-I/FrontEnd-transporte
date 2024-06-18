@@ -2,11 +2,22 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList, Platform, ActivityIndicator, } from "react-native";
 import axios from "axios";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { RootStackParamList } from "./AppNavigator";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useAuth } from "./AuthContex";
+import { useNavigation } from "@react-navigation/native";
+import AntDesign from "@expo/vector-icons/AntDesign";
+
+type RegistroVueltaScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Informes"
+>;
+
+
 
 const InformesScreen = () => {
   const [fecha, setFecha] = useState("");
@@ -15,6 +26,8 @@ const InformesScreen = () => {
   const [filteredRegistros, setFilteredRegistros] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+
+  const navigation = useNavigation<RegistroVueltaScreenNavigationProp>();
 
   const baseURL = `https://back-end-app-xyzp.onrender.com/api/informe/user/${userId}`;
   const baseURL2 = "https://back-end-app-xyzp.onrender.com/api/informe/";
@@ -159,6 +172,16 @@ const InformesScreen = () => {
           style={styles.flatList}
         />
       )}
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: "#FF6347" }]}
+        onPress={() => navigation.navigate("Home")}
+      >
+        <Text style={styles.buttonText}>
+          {" "}
+          <AntDesign name="arrowleft" size={24} color="white" />
+          Atras
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -199,8 +222,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
+    fontWeight: "500",
     color: "#FFFFFF",
-    fontSize: 15,
+    fontSize: 18,
   },
   flatList: {
     width: "100%",
@@ -225,6 +249,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: "#FFF",
     fontSize: 16,
+  },
+  button: {
+    width: "100%",
+    backgroundColor: "#007AFF",
+    paddingVertical: 12,
+    borderRadius: 10,
+    marginTop: 7,
+    marginBottom: 10,
+    alignItems: "center",
   },
 });
 
